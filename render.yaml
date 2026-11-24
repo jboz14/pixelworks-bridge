@@ -1,0 +1,23 @@
+# Render Blueprint: Render reads this file when you create the service from your GitHub repo.
+services:
+  - type: web
+    name: pixelworks-bridge
+    runtime: node
+    plan: free            # change to "starter" (about $7/month) so it never sleeps
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    autoDeploy: true      # every push to GitHub redeploys the bridge
+    envVars:
+      - key: BRIDGE_USER
+        sync: false       # you type these in the Render dashboard, they are never stored in GitHub
+      - key: BRIDGE_PASSWORD
+        sync: false
+      - key: ROBLOX_API_KEY
+        sync: false
+      - key: ROBLOX_CREATOR_ID
+        sync: false
+      - key: ROBLOX_CREATOR_TYPE
+        value: user       # or: group
+      - key: MAX_UPLOADS_PER_SEND
+        value: "30"

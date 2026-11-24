@@ -1,0 +1,21 @@
+{
+  "name": "Pixelworks Bridge (cloud)",
+  "id": "pixelworks-bridge-cloud",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": [
+    "figma"
+  ],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": [
+      "https://*.onrender.com"
+    ],
+    "devAllowedDomains": [
+      "http://localhost:4871"
+    ],
+    "reasoning": "Talks only to your own Pixelworks Bridge server (hosted on Render) with your username and password."
+  },
+  "enablePrivatePluginApi": true
+}

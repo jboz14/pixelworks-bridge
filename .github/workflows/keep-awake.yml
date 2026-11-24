@@ -1,0 +1,19 @@
+# Visits the bridge every 5 minutes so Render's free plan does not put it to sleep.
+# 1) Put your bridge address in the repo: Settings > Secrets and variables > Actions > Variables > New variable
+#    Name: BRIDGE_URL   Value: https://your-bridge.onrender.com
+# 2) Use a PUBLIC repo (free minutes). Never put keys or passwords in the repo.
+name: keep-awake
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /health
+        env:
+          BRIDGE_URL: ${{ vars.BRIDGE_URL }}
+        run: |
+          if [ -z "$BRIDGE_URL" ]; then echo "Set the BRIDGE_URL variable first."; exit 1; fi
+          curl -fsS --max-time 90 --retry 2 "$BRIDGE_URL/health"
